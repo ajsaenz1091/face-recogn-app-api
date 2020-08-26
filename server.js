@@ -58,6 +58,14 @@ app.get('/', (req, res) => {
 // Sign in route
 
 app.post('/signin', (req, res) => {
+    //bcrypt returns a hashed string( a string that has been transformed into very randome code for security)
+    bcrypt.compare("snow", "$2a$10$UJxFnxHzif9AVNK7bBtDyejwhwyh1fG70G19VFjWm4GC5c3jEzm0W", function(err, res) {
+        console.log('first guess', res)
+    });
+    //bcrypt allows us to comapre hashes
+    bcrypt.compare("veggies", "$2a$10$UJxFnxHzif9AVNK7bBtDyejwhwyh1fG70G19VFjWm4GC5c3jEzm0W", function(err, res) {
+        console.log('second guess', res);
+    });
     if (req.body.email === database.users[0].email && req.body.password === database.users[0].password){
         res.json('success');
     }else {
@@ -70,9 +78,6 @@ app.post('/signin', (req, res) => {
 app.post('/register', (req, res) => {
     // using destructuring we store whatever we get from req.body or the front-end and store it in variables
     const { email, password, name, id } = req.body;
-    bcrypt.hash(password, null, null, function(err, hash) {
-        console.log(hash);
-    });
     //we then use those variables to push a new user into our database
     database.users.push({
         id: id,
@@ -125,9 +130,7 @@ app.put('/image', (req, res) => {
 // bcrypt.compare("bacon", hash, function(err, res) {
 //     // res == true
 // });
-// bcrypt.compare("veggies", hash, function(err, res) {
-//     // res = false
-// });
+
 
 app.listen(3000, () => {
     console.log('app is running on port 3000')
