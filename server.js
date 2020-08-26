@@ -4,6 +4,7 @@ const express = require('express');//Get access to the express package
 const app = express();// create app by calling express
 //remember to always use this middleware to parse the information sent from the front-end to the back-end
 app.use(express.json());
+
 /*
 
     PLAN YOUR API BEFORE YOU START CODING
@@ -42,7 +43,7 @@ We want to have a:
  // root route
 
 app.get('/', (req, res) => {
-    res.send('this is working');
+    res.json(database.users);
 })
 
 
@@ -54,6 +55,23 @@ app.post('/signin', (req, res) => {
     }else {
         res.status(400).json('error loging in')
     }
+})
+
+// Register route
+
+app.post('/register', (req, res) => {
+    // usin destructuring we store whatever we get from req.body or the front-end and store it in variables
+    const { email, password, name, id } = req.body;
+    //we then use those variables to push a new user into our database
+    database.users.push({
+        id: id,
+        name: name,
+        email: email,
+        password: password,
+        entries: 0,
+        joined: new Date()
+    })
+    res.json(database.users[database.users.length - 1]);
 })
 
 
