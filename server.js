@@ -78,12 +78,36 @@ app.get('/profile/:id', (req, res ) => {
     const {id} = req.params;
     //We want to loop through our database to grab every id and comapre it to the one entered in the parameters.
     //if the ids match then we want to return the user with that specific id
+    let found = false;
     database.users.forEach(user => {
         if(user.id === id){
+            found = true;
             res.json(user);
         }
     })
-    res.status(404).json("no such user")
+    if(!found) {
+        res.status(404).json("no such user")
+    }
+})
+
+app.put('/image', (req, res) => {
+    //first get the user 
+    const {id} = req.body;
+    let found = false;
+    database.users.forEach(user => {
+        if(user.id === id){
+            found = true;
+            user.entries ++;
+            res.json(user.entries);
+        }
+    })
+    if(!found) {
+        res.status(404).json("no such user")
+    }
+    // then adjust the entries of that particular user
+
+
+
 })
 
 
