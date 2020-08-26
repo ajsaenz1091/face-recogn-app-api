@@ -1,10 +1,12 @@
 const express = require('express');//Get access to the express package
 const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 
 const app = express();// create app by calling express
 //remember to always use this middleware to parse the information sent from the front-end to the back-end
 app.use(express.json());
+app.use(cors());
 
 /*
 
