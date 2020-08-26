@@ -74,6 +74,18 @@ app.post('/register', (req, res) => {
     res.json(database.users[database.users.length - 1]);
 })
 
+app.get('/profile/:id', (req, res ) => {
+    const {id} = req.params;
+    //We want to loop through our database to grab every id and comapre it to the one entered in the parameters.
+    //if the ids match then we want to return the user with that specific id
+    database.users.forEach(user => {
+        if(user.id === id){
+            res.json(user);
+        }
+    })
+    res.status(404).json("no such user")
+})
+
 
 app.listen(3000, () => {
     console.log('app is running on port 3000')
