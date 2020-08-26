@@ -1,4 +1,5 @@
 const express = require('express');//Get access to the express package
+const bcrypt = require('bcrypt-nodejs');
 
 
 const app = express();// create app by calling express
@@ -37,7 +38,14 @@ We want to have a:
             entries: 0,
             joined: new Date()
         }
-        ] 
+        ] ,
+        login: [
+            {
+                id: '987',
+                hash: '',
+                email: 'john@gmail.com'
+            }
+        ]
  }
 
  // root route
@@ -60,8 +68,11 @@ app.post('/signin', (req, res) => {
 // Register route
 
 app.post('/register', (req, res) => {
-    // usin destructuring we store whatever we get from req.body or the front-end and store it in variables
+    // using destructuring we store whatever we get from req.body or the front-end and store it in variables
     const { email, password, name, id } = req.body;
+    bcrypt.hash(password, null, null, function(err, hash) {
+        console.log(hash);
+    });
     //we then use those variables to push a new user into our database
     database.users.push({
         id: id,
@@ -110,6 +121,13 @@ app.put('/image', (req, res) => {
 
 })
 
+// // Load hash from your password DB.
+// bcrypt.compare("bacon", hash, function(err, res) {
+//     // res == true
+// });
+// bcrypt.compare("veggies", hash, function(err, res) {
+//     // res = false
+// });
 
 app.listen(3000, () => {
     console.log('app is running on port 3000')
