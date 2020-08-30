@@ -1,7 +1,10 @@
 const express = require('express');//Get access to the express package
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
-const knex = require('knex')({
+const knex = require('knex');
+
+
+const postgres = knex({
     client: 'pg',
     connection: {
       host : '127.0.0.1',
@@ -10,6 +13,8 @@ const knex = require('knex')({
       database : 'face_recogn_db'
     }
   });
+
+console.log(postgres.select('*').from('users'));
 
 
 const app = express();// create app by calling express
