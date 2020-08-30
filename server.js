@@ -1,6 +1,15 @@
 const express = require('express');//Get access to the express package
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
+const knex = require('knex')({
+    client: 'pg',
+    connection: {
+      host : '127.0.0.1',
+      user : 'ajsae',
+      password : '',
+      database : 'face_recogn_db'
+    }
+  });
 
 
 const app = express();// create app by calling express
@@ -69,7 +78,7 @@ app.post('/signin', (req, res) => {
         console.log('second guess', res);
     });
     if (req.body.email === database.users[0].email && req.body.password === database.users[0].password){
-        res.json('success');
+        res.json(database.users[0]);
     }else {
         res.status(400).json('error loging in')
     }
@@ -85,7 +94,6 @@ app.post('/register', (req, res) => {
         id: id,
         name: name,
         email: email,
-        password: password,
         entries: 0,
         joined: new Date()
     })
