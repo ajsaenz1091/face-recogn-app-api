@@ -12,11 +12,7 @@ const db = knex({
       password : '1234',
       database : 'face_recogn_db'
     }
-  }); // connecting to database face_recogn_db
-
-db.select('*').from('users').then(data => {
-    console.log(data);
-});// returning data from the database
+}); // connecting to database face_recogn_db
 
 
 const app = express();// create app by calling express
@@ -96,14 +92,12 @@ app.post('/signin', (req, res) => {
 app.post('/register', (req, res) => {
     // using destructuring we store whatever we get from req.body or the front-end and store it in variables
     const { email, password, name, id } = req.body;
-    //we then use those variables to push a new user into our database
-    database.users.push({
-        id: id,
+    // using knex to insert user info into users table in our database
+    db('users').insert({
         name: name,
         email: email,
-        entries: 0,
         joined: new Date()
-    })
+    }).then(console.log)
     res.json(database.users[database.users.length - 1]);
 })
 
