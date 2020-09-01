@@ -56,7 +56,7 @@ app.post('/register', (req,res) => {register.handleRegister(req, res, db, bcrypt
 
 app.get('/profile/:id', (req, res) => {profile.profileHandler(req, res, db )})
 
-app.put('/image', (req, res) => {image.imageHandler(req, res, db)})
+app.put('/image', (req, res) => {image.imageHandler(req, res, db,)})
 
 // // Load hash from your password DB.
 // bcrypt.compare("bacon", hash, function(err, res) {

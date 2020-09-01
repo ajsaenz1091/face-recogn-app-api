@@ -2,6 +2,12 @@
 const handleRegister = (req, res, db, bcrypt) => {
     // using destructuring we store whatever we get from req.body or the front-end and store it in variables
     const { email, password, name, id } = req.body;
+
+    //Validation
+
+    if(!email || !name || !password){
+        return res.status(400).json("incorrect form submission")
+    }
     
     // using bcrypt to hash the password of our users
     const hash = bcrypt.hashSync(password); // we now have an encrypted password now we need to update both the users
