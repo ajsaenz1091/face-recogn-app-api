@@ -58,6 +58,8 @@ app.get('/profile/:id', (req, res) => {profile.profileHandler(req, res, db )})
 
 app.put('/image', (req, res) => {image.imageHandler(req, res, db,)})
 
+app.post('/imageurl', (req, res) => {image.apiHandler(req, res)})
+
 // // Load hash from your password DB.
 // bcrypt.compare("bacon", hash, function(err, res) {
 //     // res == true
